@@ -1,11 +1,13 @@
 package ConexionDB;
-
+//<>
 import java.sql.*;
+import java.util.Scanner;
 
 public class ConexionDb {
 
     /**
      * Crearemos la conexion con usuarios clave
+     * SE DEBE TRABAJAR LA OPCION DE INGRESAR OCN UN USUARIO
      *
      */
 
@@ -13,6 +15,7 @@ public class ConexionDb {
    private String User = "LexaDeveloper";
    private String Password = "2410";
    private String query;
+   private Scanner Entrada;
    Connection conexion;
    Statement stm;
    ResultSet rst;
@@ -25,21 +28,24 @@ public class ConexionDb {
 
     }//final del constructor
 
-    public void LecturaBD(){
+
+    //ESTE METODO DEBE DE TRABAJARSE
+    public void LeerDatos(String query){
 
         //Creamos la conexion
         try {
             conexion = DriverManager.getConnection(url,User,Password);//Obtenemos la conexion
 
-            String query = "SELECT * FROM \"libro\"";
-
+            //this.query = "SELECT * FROM \"libro\"";
+            this.query = query;
 
 
             //extramos los datos de la base
             stm = conexion.createStatement();
-            rst = stm.executeQuery(query);
+            rst = stm.executeQuery(this.query);
 
-
+            System.out.println("Codigo-------Titulo-------Autor-------Categoria-------Año-------Disponibilidad"
+            );
             //bucle que leee desde la base de datos
             while (rst.next()){
                 String codigo,titulo,autor,categoria,anio;
@@ -51,6 +57,10 @@ public class ConexionDb {
                 categoria = rst.getString(4);
                 anio = rst.getString(5);
                 estado = rst.getBoolean(6);
+
+
+
+
                 System.out.println(
                 " "+codigo+" "+titulo+" "+autor+" "+categoria+" "+anio+" "+estado
 
@@ -70,6 +80,52 @@ public class ConexionDb {
 
 
     }//final del metodo
+
+
+
+    //******************************************************************************************
+    //trateremnos de retornar un resultset
+    public ResultSet TESTLeerDatos(String query){
+
+        //Creamos la conexion
+        try {
+            conexion = DriverManager.getConnection(url,User,Password);//Obtenemos la conexion
+
+            //this.query = "SELECT * FROM \"libro\"";
+            this.query = query;
+
+
+            //extramos los datos de la base
+            stm = conexion.createStatement();
+            rst = stm.executeQuery(this.query);
+
+
+
+                conexion.close();
+
+            //}//final del bucle
+
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return rst;
+    }//final del metodo
+
+//******************************************************************************************
+
+
+
+
+
+
+
+
+
+
 
     public void InsertarDatos(String titulo,String autor,String categoria,int anio,boolean estado){
         try {
@@ -104,6 +160,55 @@ public class ConexionDb {
 
 
     }//final del metodo
+
+
+    public void EliminarDatos(){
+
+            //creamos la conexion
+        try {
+
+            query = "DELETE FROM libro WHERE codigo = ?";//consulta
+            conexion = DriverManager.getConnection(this.url,this.User,this.Password);
+
+            int ClaveAborrar=0;
+            Entrada = new Scanner(System.in);
+            System.out.println("Ingrese el registro a eliminar");
+            ClaveAborrar = Entrada.nextInt();//leemos la clave
+
+
+            prst = conexion.prepareStatement(query);
+
+            prst.setInt(1,ClaveAborrar);//eliminamos la clave seleccionada
+
+            //obtenemos el dato de las filas eliminadas
+
+            int filas_eliminadas = prst.executeUpdate();
+
+
+            //validamos
+            //<>
+            if(filas_eliminadas >0){
+                System.out.println(filas_eliminadas+" filas eliminadas");
+            }//final de la condicion
+            else{
+                System.out.println("NO existe la clave seleccionada");
+            }
+
+
+
+
+            //cerramos la conexion
+            conexion.close();
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }//final del metodo
+
 
 
 

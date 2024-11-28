@@ -1,7 +1,8 @@
 package utiles;
 
 import ConexionDB.ConexionDb;
-
+import entidades.Libros;
+//<>
 import java.text.CompactNumberFormat;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ public class menuPrincipal {
     public menuPrincipal(){
 
         System.out.println("Bienvenido que desea hacer" +
-                "\n 1)Consultar registro 2)Insertar Registro 0)Salir");
+                "\n 1)Consultar registro 2)Insertar Registro 3)Eliminar Datos 0)Salir");
             entradaOpcion = new Scanner(System.in);
 
             //leemos la opcion
@@ -39,10 +40,17 @@ public class menuPrincipal {
                     System.exit(0);
                     break;
                 case 1:
-                    conexion.LecturaBD();
+                    //conexion.LeerDatos("SELECT * FROM \"libro\"");
+                    Libros l = new Libros();
+                    l.leerDatosDeLaDB();
                     break;
                 case 2:
-                    conexion.InsertarDatos("Un saco de huesos","Stephen king","Terror",1976,false);
+
+                    //en la llamada de este metodo se debe ingresar por consola los datos
+                    conexion.InsertarDatos("Borrar","Borrar","Borrar",0,false);
+                    break;
+                case 3:
+                    conexion.EliminarDatos();
                     break;
             }//final del switch
 
