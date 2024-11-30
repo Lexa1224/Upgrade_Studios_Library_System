@@ -17,7 +17,7 @@ public class menuPrincipal {
     public menuPrincipal(){
 
         System.out.println("Bienvenido que desea hacer" +
-                "\n 1)Consultar registro 2)Insertar Registro 3)Eliminar Datos 0)Salir");
+                "\n 1)Consultar registro 2)Insertar Registro 3)Eliminar Datos 0)Salir 4)testear metodo");
             entradaOpcion = new Scanner(System.in);
 
             //leemos la opcion
@@ -51,6 +51,11 @@ public class menuPrincipal {
                     break;
                 case 3:
                     conexion.EliminarDatos();
+                    break;
+                case 4://TEST
+                    System.out.println("Testeando");
+                    Libros test = new Libros();
+                    test.LecturaDeDatos();
                     break;
             }//final del switch
 

@@ -30,7 +30,9 @@ public class ConexionDb {
 
 
     //ESTE METODO DEBE DE TRABAJARSE
-    public void LeerDatos(String query){
+
+
+    /*public void asdLeerDatos(String query){
 
         //Creamos la conexion
         try {
@@ -80,12 +82,12 @@ public class ConexionDb {
 
 
     }//final del metodo
-
+*/
 
 
     //******************************************************************************************
     //trateremnos de retornar un resultset
-    public ResultSet TESTLeerDatos(String query){
+    public ResultSet LeerDatos(String query){
 
         //Creamos la conexion
         try {
@@ -95,7 +97,7 @@ public class ConexionDb {
             this.query = query;
 
 
-            //extramos los datos de la base
+            //extraemos los datos de la base
             stm = conexion.createStatement();
             rst = stm.executeQuery(this.query);
 
@@ -114,19 +116,6 @@ public class ConexionDb {
 
         return rst;
     }//final del metodo
-
-//******************************************************************************************
-
-
-
-
-
-
-
-
-
-
-
     public void InsertarDatos(String titulo,String autor,String categoria,int anio,boolean estado){
         try {
             conexion = DriverManager.getConnection(this.url,this.User,this.Password);
@@ -160,8 +149,6 @@ public class ConexionDb {
 
 
     }//final del metodo
-
-
     public void EliminarDatos(){
 
             //creamos la conexion
@@ -210,6 +197,46 @@ public class ConexionDb {
     }//final del metodo
 
 
+
+
+
+/******************************************************************/
+    public PreparedStatement InsertarDatosTEST(String query){
+        try {
+            this.conexion = DriverManager.getConnection(this.url,this.User,this.Password);
+
+
+            //alistamos la query
+           // this.query = "INSERT INTO libro (titulo, autor, categoria, año, estado) VALUES (?, ?, ?, ?, ?)";
+
+            //prparamos la orden
+            this.prst = this.conexion.prepareStatement(query);
+            //prst.setString(1,titulo);
+            //prst.setString(2,autor);
+            //prst.setString(3,categoria);
+            //prst.setInt(4,anio);
+            //prst.setBoolean(5,estado);
+
+
+            //comprobando el insert
+           // int filas_insertadas = prst.executeUpdate();
+
+            //System.out.println("Se han insertado "+filas_insertadas+" Filas" );
+
+
+
+
+        //cerramos la conexion
+            //this.conexion.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return this.prst;//retornamos el prepareStatement
+
+    }//final del metodo
+
+/****************************************************************/
 
 
 
